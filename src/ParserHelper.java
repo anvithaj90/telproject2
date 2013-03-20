@@ -38,31 +38,29 @@ public class ParserHelper {
 			errornumber = 200;
 			error = "OK";
 			finalresponse = response(inp[0],httpversion[0], errornumber, error, filetype);
-			System.out.println(finalresponse);
+			//System.out.println(finalresponse);
 			return finalresponse;
 		
 		}
 		else 
 		{
-			return "501 Method Unimplemented";
+			errornumber = 501;
+			error = "Method Unimplemented";
+			finalresponse = response(inp[0],httpversion[0], errornumber, error, filetype);
+			return finalresponse;
 		}
 	
 	}
 
 	private static String response(String string, String httpversion, Integer errornumber,
 			String error, String filetype) {
-			//String eol = System.getProperty("line.separator");
-		// TODO Auto-generated method stub
-		
-		if(string.equals("HEAD"))
-		{
+			
 			String finalresponse = httpversion + " " + errornumber + " " + error + " \n" +
 		                           "Server: Simple/1.0\n" +
 					               "Content-Type: " + filetype + "\n\n";
-	//		System.out.println(finalresponse);
 			return finalresponse;
-		}
-		return error;
+		
+		
 	}
 	
 }
