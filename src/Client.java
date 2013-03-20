@@ -78,8 +78,13 @@ boolean flag = true;
 				outStream.writeChar('\n');
 				outStream.flush();
 				/* Read the data echoed by the server */
+				System.out.println("Received : ");
 				buffer = inStream.readLine();
-				System.out.println("Received : " + buffer.toString());
+				while(buffer.length()!=0) {
+					System.out.println(buffer.toString());
+					buffer = inStream.readLine();
+				}
+
 			
 				/* Close the connection and wait for next input */
 				sock.close();

@@ -49,7 +49,6 @@ public class ParserHelper {
 	private static String response(String string, String httpversion, Integer errornumber,
 			String error, String filetype) {
 			//String eol = System.getProperty("line.separator");
-		// TODO Auto-generated method stub
 		
 		if(string.equals("HEAD"))
 		{
