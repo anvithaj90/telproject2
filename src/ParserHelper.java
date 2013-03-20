@@ -10,11 +10,12 @@ public class ParserHelper {
 		Integer errornumber;
 		String filetype = "text/html";
 		String finalresponse = "";
+		String filecontent = "";
 		inp = input.split(" ");
 		
 		httpversion = inp[2].split("\r\n");
-	//	filetype = GetMime.getMimeType(inp[1]);
-	//	System.out.println(filetype);
+		filetype = GetMime.getMimeType(inp[1]);
+		System.out.println(filetype);
 		if(!(httpversion[0].trim().equals("HTTP/1.0")))
 		{
 			errornumber = 505;
@@ -27,6 +28,8 @@ public class ParserHelper {
 			errornumber = 200;
 			error = "OK";
 			finalresponse = response(inp[0],httpversion[0], errornumber, error, filetype);
+			filecontent = Fileread.main(inp[1]);
+			finalresponse += filecontent;
 			return finalresponse;
 		
 		}
