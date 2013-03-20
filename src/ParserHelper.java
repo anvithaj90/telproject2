@@ -16,6 +16,7 @@ public class ParserHelper {
 		httpversion = inp[2].split("\r\n");
 		filetype = GetMime.getMimeType(inp[1]);
 		System.out.println(filetype);
+		System.out.println(inp[1]);
 		if(!(httpversion[0].trim().equals("HTTP/1.0")))
 		{
 			errornumber = 505;
@@ -30,6 +31,7 @@ public class ParserHelper {
 			finalresponse = response(inp[0],httpversion[0], errornumber, error, filetype);
 			filecontent = Fileread.main(inp[1]);
 			finalresponse += filecontent;
+			System.out.println(finalresponse);
 			return finalresponse;
 		
 		}

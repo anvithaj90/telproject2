@@ -57,7 +57,7 @@ boolean flag = true;
 			try {
 				/* Read data from the user */
 				//buffer = br.readLine();
-				buffer = "HEAD /index.html HTTP/1.0\r\nHost: www.example.com\r\nConnection: close\r\n\n";
+				buffer = "GET /index.html HTTP/1.0\r\nHost: www.example.com\r\nConnection: close\r\n\n";
 			
 				/*
 				 * connect() to the server at addr:port. The server needs to be
