@@ -24,7 +24,6 @@ public class Client {
 		BufferedReader inStream = null;
 		DataOutputStream outStream = null;
 		String buffer = null;
-
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
 		/* Parse parameter and do args checking */
@@ -52,11 +51,14 @@ public class Client {
 			System.err.println("Invalid address provided for server");
 			System.exit(1);
 		}
-
-		while (true) {
+boolean flag = true;
+		while (flag) {
+			flag = false;
 			try {
 				/* Read data from the user */
-				buffer = br.readLine();
+				//buffer = br.readLine();
+				buffer = "HEAD /index.html HTTP/1.0\r\nHost: www.example.com\r\nConnection: close\r\n\n";
+			
 				/*
 				 * connect() to the server at addr:port. The server needs to be
 				 * listen() in order for this to succeed. This call initiates
@@ -78,6 +80,7 @@ public class Client {
 				/* Read the data echoed by the server */
 				buffer = inStream.readLine();
 				System.out.println("Received : " + buffer.toString());
+			
 				/* Close the connection and wait for next input */
 				sock.close();
 			} catch (IOException e) {

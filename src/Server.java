@@ -21,7 +21,7 @@ public class Server {
 		int port = 8080;
 		BufferedReader inStream = null;
 		DataOutputStream outStream = null;
-
+		String[] inp;
 		/* Parse parameter and do args checking */
 		if (args.length < 1) {
 			System.err.println("Usage: java Server <port_number>");
@@ -51,8 +51,9 @@ public class Server {
 			System.err.println("Unable to listen on port " + port);
 			System.exit(1);
 		}
-
-		while (true) {
+boolean flag = true;
+		while (flag) {
+			flag = false;
 			Socket clientSock;
 			try {
 				/*
@@ -80,7 +81,7 @@ public class Server {
 				 * Echo the data back and flush the stream to make sure that the
 				 * data is sent immediately
 				 */
-				outStream.writeBytes(ParserHelper.parseHttp(buffer));
+				outStream.write((ParserHelper.parseHttp(buffer)).getBytes());
 				outStream.flush();
 				/* Interaction with this client complete, close() the socket */
 				clientSock.close();
