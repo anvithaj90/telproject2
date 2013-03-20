@@ -51,9 +51,9 @@ public class Server {
 			System.err.println("Unable to listen on port " + port);
 			System.exit(1);
 		}
-boolean flag = true;
-		while (flag) {
-			flag = false;
+//boolean flag = true;
+		while (true) {
+			//flag = false;
 			Socket clientSock;
 			try {
 				/*

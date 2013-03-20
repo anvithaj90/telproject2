@@ -5,7 +5,7 @@ public class ParserHelper {
 	public static String parseHttp(String input) throws IOException{
 		String[] inp, httpversion;
 		input = input.replaceAll("\0", "");
-		System.out.println(input);
+		//System.out.println(input);
 		String error = "";
 		Integer errornumber;
 		String filetype = "text/html";
@@ -15,9 +15,9 @@ public class ParserHelper {
 		
 		httpversion = inp[2].split("\r\n");
 		filetype = GetMime.getMimeType(inp[1]);
-		System.out.println(filetype);
-		System.out.println(inp[1]);
-		if(!(httpversion[0].trim().equals("HTTP/1.0")))
+		//System.out.println(filetype);
+		//System.out.println(inp[1]);
+		if(!((httpversion[0].trim().equals("HTTP/1.0"))||(httpversion[0].trim().equals("HTTP/1.1"))))
 		{
 			errornumber = 505;
 			error += "http version not supported";
@@ -31,11 +31,11 @@ public class ParserHelper {
 			finalresponse = response(inp[0],httpversion[0], errornumber, error, filetype);
 			filecontent = Fileread.main(inp[1]);
 			finalresponse += filecontent;
-			System.out.println(finalresponse);
+			//System.out.println("I came here");
 			return finalresponse;
 		
 		}
-		if((inp[0].equals("HEAD")))
+		else if((inp[0].equals("HEAD")))
 		{
 			errornumber = 200;
 			error = "OK";
