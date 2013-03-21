@@ -31,6 +31,7 @@ public class ParserHelper {
 			finalresponse = response(inp[0],httpversion[0], errornumber, error, filetype);
 			filecontent = Fileread.main(inp[1]);
 			finalresponse += filecontent;
+			System.out.println(finalresponse);
 			//System.out.println("I came here");
 			return finalresponse;
 		
@@ -40,7 +41,7 @@ public class ParserHelper {
 			errornumber = 200;
 			error = "OK";
 			finalresponse = response(inp[0],httpversion[0], errornumber, error, filetype);
-			//System.out.println(finalresponse);
+			System.out.println(finalresponse);
 			return finalresponse;
 		
 		}
