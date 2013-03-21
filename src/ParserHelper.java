@@ -12,8 +12,14 @@ public class ParserHelper {
 		String finalresponse = "";
 		String filecontent = "";
 		inp = input.split(" ");
-		
+		String checkcss;
+		checkcss = inp[1].substring((inp[1].length())-3);
+		if(checkcss.equals("css"))
+		{
+			filetype = "text/css";
+		}
 		httpversion = inp[2].split("\r\n");
+		if (filetype != "text/css")
 		filetype = GetMime.getMimeType(inp[1]);
 		//System.out.println(filetype);
 		//System.out.println(inp[1]);
