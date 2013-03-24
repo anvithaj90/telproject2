@@ -10,44 +10,38 @@ import java.io.IOException;
  * FileOutputStream to read the file.
  * 
  */
-public class Fileread {
+public class Imageread {
 
-  public static byte[] main(String args) throws IOException {
+  public static byte[] readImage(String args) throws IOException {
+//	  
 
 	  String[] inp = null;
 	  inp = args.split(" ");
-	  
-    File file = new File("www/"+inp[1]);
+    File file = new File(System.getProperty("user.dir") + "/www"+inp[1]);
   //  System.out.println(args);
     FileInputStream fis = null;
-    BufferedInputStream bis = null;
-    DataInputStream dis = null;
-    String filecontent = "";
+
+    byte[] filecontent = new byte[(int)file.length()] ;
     if(!(file.exists()))
     {
     	return ("not found").getBytes();
     }
     try {
       fis = new FileInputStream(file);
-      bis = new BufferedInputStream(fis);
-      dis = new DataInputStream(bis);
 
-      while (dis.available() != 0) {
+      fis.read(filecontent, 0,(int)file.length());
+
+      System.out.println(filecontent);
       
-       // System.out.println(dis.readLine());
-    	  filecontent += dis.readLine();
-      }
-    //  System.out.println(filecontent);
-      
-      fis.close();
+     /* fis.close();
       bis.close();
-      dis.close();
+      dis.close();*/
 
     } catch (FileNotFoundException e) {
       e.printStackTrace();
     } catch (IOException e) {
       e.printStackTrace();
     }
-	return filecontent.getBytes();
+	return filecontent;
   }
 }

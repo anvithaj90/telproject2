@@ -1,16 +1,18 @@
 import java.io.IOException;
+import java.util.Arrays;
 
 
 public class ParserHelper {
-	public static String parseHttp(String input) throws IOException{
+	public static byte[] parseHttp(String input) throws IOException{
 		String[] inp, httpversion;
 		input = input.replaceAll("\0", "");
 		//System.out.println(input);
 		String error = "";
 		Integer errornumber;
 		String filetype = "text/html";
-		String finalresponse = "";
-		String filecontent = "";
+		byte[] finalresponse;
+		byte[] filecontent;
+	//	byte[] c = null;
 		inp = input.split(" ");
 		String checkcss;
 		checkcss = inp[1].substring((inp[1].length())-3);
@@ -26,7 +28,7 @@ public class ParserHelper {
 		if(!((httpversion[0].trim().equals("HTTP/1.0"))||(httpversion[0].trim().equals("HTTP/1.1"))))
 		{
 			errornumber = 505;
-			error += "http version not supported";
+			error = "HTTP version not supported";
 	   		finalresponse = response(inp[0],httpversion[0], errornumber, error, filetype);
 			return finalresponse;
 		}
@@ -34,11 +36,32 @@ public class ParserHelper {
 		{
 			errornumber = 200;
 			error = "OK";
+			String[] temp =  null;
+			temp = filetype.split("/");
+			if (temp[0].equals("image"))
+			{
+				filecontent = Imageread.readImage(input);
+			}
+			else
+			{
+			filecontent = Fileread.main(input);
+			}
+			if(Arrays.equals(filecontent, ("not found").getBytes()))
+			{
+				errornumber = 404;
+				error = "Not Found";
+			/*	filecontent = ("<HTML>"
+			              + "<HEAD><TITLE>404 Not Found</TITLE></HEAD>"
+			              + "<BODY><h1>404 File Not Found</h1>"
+			              + "<br><h3><i>usage:http://yourHostName:port/"
+			              + "fileName.html <br><br>could not find " + inp[1] + "</h3></i></BODY></HTML>").getBytes();*/
+			}
 			finalresponse = response(inp[0],httpversion[0], errornumber, error, filetype);
-			filecontent = Fileread.main(inp[1]);
-			finalresponse += filecontent;
-			System.out.println(finalresponse);
-			//System.out.println("I came here");
+			//if(!(filecontent.equals("not found")))
+			/*c = new byte[finalresponse.length + filecontent.length];
+			System.arraycopy(finalresponse, 0, c, 0, finalresponse.length);
+			System.arraycopy(filecontent, 0, c, finalresponse.length, filecontent.length);
+			System.out.println(finalresponse);*/
 			return finalresponse;
 		
 		}
@@ -47,7 +70,7 @@ public class ParserHelper {
 			errornumber = 200;
 			error = "OK";
 			finalresponse = response(inp[0],httpversion[0], errornumber, error, filetype);
-			System.out.println(finalresponse);
+			//System.out.println(finalresponse);
 			return finalresponse;
 		
 		}
@@ -61,13 +84,15 @@ public class ParserHelper {
 	
 	}
 
-	private static String response(String string, String httpversion, Integer errornumber,
+	private static byte[] response(String string, String httpversion, Integer errornumber,
 			String error, String filetype) {
 			
-			String finalresponse = httpversion + " " + errornumber + " " + error + " \n" +
-		                           "Server: Simple/1.0\n" +
-					               "Content-Type: " + filetype + "\n\n";
-			return finalresponse;
+			String finalresponse = httpversion + " " + errornumber + " " + error + 
+									"\r\n" + "Server: Simple/1.0\r\n" +
+					               "Content-Type: " + filetype + "\r\n\r\n";
+			byte[] finals = finalresponse.getBytes();
+			System.out.println(finalresponse);
+			return finals;
 		
 		
 	}
