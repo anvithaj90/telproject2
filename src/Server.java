@@ -8,6 +8,8 @@
  */
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
@@ -121,9 +123,15 @@ class MultithreadedServer extends Thread {
 				filetype ="a/a";
 			}
 			temp2 = filetype.split("/");
-			if (temp2[0] == "image")
+			if (temp2[0].equals("image"))
 			{
-				temp = Imageread.readImage(req);
+				/*File imageFile = new File(System.getProperty("user.dir") + "/www"+inp[1]);
+                FileInputStream fs = new FileInputStream(imageFile);
+                byte[] data = new byte[(int)imageFile.length()];
+                fs.read(data, 0, (int)imageFile.length());
+                fs.close();*/
+                //System.arraycopy(data, 0, temp, 0, data.length);
+				//temp = Imageread.readImage(req);
 			}
 			else
 			{
@@ -170,11 +178,26 @@ class MultithreadedServer extends Thread {
 			{
 				outStream.write(ParserHelper.parseHttp(buffer));
 				//System.out.println(temp.toString());
-				outStream.write(temp);
+				if (temp2[0].equals("image"))
+				{
+					File imageFile = new File(System.getProperty("user.dir") + "/www"+inp1[1]);
+	                FileInputStream fs = new FileInputStream(imageFile);
+	                byte[] data = new byte[(int)imageFile.length()];
+	                fs.read(data, 0, (int)imageFile.length());
+	                fs.close();
+					outStream.write(data);                
+	                outStream.flush();
+				}
+				else
+				{
+				outStream.write(temp,0,temp.length);
 				outStream.flush();
+				}
 				System.out.println("Response Sent");
 			}
 			/* Interaction with this client complete, close() the socket */
+			//inStream.close();
+			//outStream.close();
 			clientSock.close();
 		} catch (IOException e) {
 			clientSock = null;
